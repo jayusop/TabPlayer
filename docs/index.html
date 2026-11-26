@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tab Player — macOS 기타 타브 플레이어</title>
+<meta name="description" content="Tab Player는 Guitar Pro 파일(GP3–GP8)을 열어 보고, 듣고, 연습하고, 편집할 수 있는 무료 macOS 앱입니다.">
+<link rel="icon" type="image/png" href="icon.png">
+<meta property="og:title" content="Tab Player">
+<meta property="og:description" content="Guitar Pro 파일을 열어 보고, 듣고, 연습하는 무료 macOS 앱">
+<meta property="og:image" content="https://jayusop.github.io/TabPlayer/screenshot.jpg">
+<style>
+  :root{
+    --bg:#121218; --bg2:#1a1a23; --card:#20202b; --line:#2e2e3c;
+    --text:#ececf3; --muted:#a2a2b5; --accent:#e8457f; --accent2:#f08a5d; --blue:#4a90e2;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Segoe UI",sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;word-break:keep-all}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  nav{position:sticky;top:0;z-index:10;background:rgba(18,18,24,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:20px;height:58px}
+  nav .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--text)}
+  nav .brand img{width:30px;height:30px}
+  nav .links{display:flex;gap:18px;margin-left:auto;font-size:14px}
+  nav .links a{color:var(--muted)}
+  nav .links a:hover{color:var(--text);text-decoration:none}
+  .lang{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .lang button{background:none;border:0;color:var(--muted);padding:5px 10px;font-size:13px;cursor:pointer}
+  .lang button.on{background:var(--card);color:var(--text)}
+  header.hero{padding:80px 0 40px;text-align:center;background:radial-gradient(ellipse at 50% -10%,rgba(232,69,127,.22),transparent 60%)}
+  .hero img.icon{width:128px;height:128px}
+  .hero h1{font-size:52px;margin:12px 0 8px;letter-spacing:-1px}
+  .hero p.tag{font-size:20px;color:var(--muted);margin:0 auto 28px;max-width:640px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:12px;font-weight:600;font-size:16px}
+  .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+  .btn.ghost{border:1px solid var(--line);color:var(--text);margin-left:8px}
+  .btn:hover{text-decoration:none;filter:brightness(1.08)}
+  .meta{margin-top:16px;font-size:13px;color:var(--muted)}
+  .shot{margin:48px auto 0;max-width:1080px;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .shot img{display:block;width:100%}
+  section{padding:72px 0;border-top:1px solid var(--line)}
+  section h2{font-size:32px;margin:0 0 10px;letter-spacing:-.5px}
+  section p.lead{color:var(--muted);margin:0 0 36px;font-size:17px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .card .ico{font-size:26px}
+  .card h3{margin:8px 0 6px;font-size:17px}
+  .card p{margin:0;color:var(--muted);font-size:14.5px}
+  .sc{background:linear-gradient(135deg,rgba(232,69,127,.14),rgba(74,144,226,.12));border:1px solid rgba(232,69,127,.35);border-radius:18px;padding:36px;display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center}
+  .sc h2{margin-top:0}
+  .sc ol{margin:0;padding-left:20px;color:var(--text)}
+  .sc ol li{margin:6px 0}
+  .sc .note{font-size:13.5px;color:var(--muted);margin-top:14px}
+  code,kbd{background:#0d0d12;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:13px;font-family:"SF Mono",Menlo,monospace}
+  .dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .dl .card{display:flex;flex-direction:column}
+  .dl .card .btn{margin-top:16px;justify-content:center}
+  .badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:var(--accent);color:#fff;margin-left:6px;vertical-align:middle}
+  .steps{counter-reset:s;list-style:none;padding:0;margin:0}
+  .steps li{counter-increment:s;position:relative;padding:0 0 18px 48px}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-weight:700;color:var(--accent2)}
+  .steps li > b{display:block}
+  .steps li span{color:var(--muted);font-size:15px}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  td:first-child{color:var(--muted);width:200px}
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+  summary{cursor:pointer;font-weight:600}
+  details p{color:var(--muted);margin:10px 0 0}
+  footer{border-top:1px solid var(--line);padding:36px 0 50px;color:var(--muted);font-size:13px;text-align:center}
+  [data-lang="en"]{display:none}
+  body.en [data-lang="ko"]{display:none}
+  body.en [data-lang="en"]{display:revert}
+  @media (max-width:760px){
+    .hero h1{font-size:38px} nav .links{display:none} .sc{grid-template-columns:1fr;padding:24px}
+    .btn.ghost{margin:10px 0 0} td:first-child{width:auto}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#"><img src="icon.png" alt="">Tab Player</a>
+    <div class="links">
+      <a href="#features"><span data-lang="ko">기능</span><span data-lang="en">Features</span></a>
+      <a href="#soundcompas">SoundCompas</a>
+      <a href="#download"><span data-lang="ko">다운로드</span><span data-lang="en">Download</span></a>
+      <a href="#install"><span data-lang="ko">설치</span><span data-lang="en">Install</span></a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="lang"><button id="b-ko" class="on" onclick="setLang('ko')">한국어</button><button id="b-en" onclick="setLang('en')">EN</button></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="icon" src="icon.png" alt="Tab Player 아이콘">
+    <h1>Tab Player</h1>
+    <p class="tag" data-lang="ko">Guitar Pro 파일을 열어 보고, 듣고, 연습하고, 편집하는<br>무료 macOS 기타 타브 플레이어</p>
+    <p class="tag" data-lang="en">A free macOS tab player to open, hear, practise and edit<br>Guitar Pro files</p>
+    <a class="btn primary" href="#download"><span data-lang="ko">⬇ 무료 다운로드</span><span data-lang="en">⬇ Free download</span></a>
+    <a class="btn ghost" href="#soundcompas"><span data-lang="ko">🎛 SoundCompas와 함께 쓰기</span><span data-lang="en">🎛 Use with SoundCompas</span></a>
+    <div class="meta" data-lang="ko">macOS 12 이상 · Apple Silicon / Intel · 버전 0.1.0</div>
+    <div class="meta" data-lang="en">macOS 12 or later · Apple Silicon / Intel · version 0.1.0</div>
+    <div class="shot"><img src="screenshot.jpg" alt="Tab Player 화면"></div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <h2><span data-lang="ko">주요 기능</span><span data-lang="en">Features</span></h2>
+    <p class="lead" data-lang="ko">악보를 보는 것부터 연습, 사운드, 내보내기까지 한 앱에서.</p>
+    <p class="lead" data-lang="en">From reading the score to practising, sound and export, in one app.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">📂</div>
+        <h3 data-lang="ko">Guitar Pro 파일 열기</h3><h3 data-lang="en">Opens Guitar Pro files</h3>
+        <p data-lang="ko">GP3·GP4·GP5(.gp3/.gp4/.gp5), GP6(.gpx), GP7·GP8(.gp) 파일을 엽니다. 확장자가 잘못된 다운로드 파일도 내용을 보고 형식을 알아냅니다.</p>
+        <p data-lang="en">Reads .gp3/.gp4/.gp5, .gpx and .gp (GP7/8). It recognises the format from the contents, so mislabelled downloads still open.</p></div>
+      <div class="card"><div class="ico">🎼</div>
+        <h3 data-lang="ko">타브 + 오선보</h3><h3 data-lang="en">Tab + notation</h3>
+        <p data-lang="ko">A4 페이지 레이아웃으로 타브와 오선보를 함께 보여 줍니다. 기타, 베이스, 드럼 등 여러 트랙을 지원합니다.</p>
+        <p data-lang="en">Tablature and standard notation on A4 pages, with multiple tracks: guitar, bass, drums and more.</p></div>
+      <div class="card"><div class="ico">🔁</div>
+        <h3 data-lang="ko">연습 도구</h3><h3 data-lang="en">Practice tools</h3>
+        <p data-lang="ko">A–B 구간 반복, 재생 속도 조절, 메트로놈, 카운트인으로 어려운 부분을 천천히 반복 연습하세요.</p>
+        <p data-lang="en">A–B practice loop, playback speed, metronome and count-in to work through hard passages slowly.</p></div>
+      <div class="card"><div class="ico">✏️</div>
+        <h3 data-lang="ko">편집</h3><h3 data-lang="en">Editing</h3>
+        <p data-lang="ko">가상 지판이나 프렛 번호로 음표를 입력하고 해머온, 슬라이드, 벤딩, 비브라토, 팜뮤트, 하모닉스 등 주법을 넣을 수 있습니다.</p>
+        <p data-lang="en">Enter notes on the virtual fretboard or by fret number, and add hammer-ons, slides, bends, vibrato, palm mutes, harmonics and more.</p></div>
+      <div class="card"><div class="ico">🎸</div>
+        <h3 data-lang="ko">페달보드 & 앰프</h3><h3 data-lang="en">Pedalboard & amp</h3>
+        <p data-lang="ko">트랙마다 이펙터 페달과 앰프·캐비닛을 연결해 톤을 만듭니다. 트랙별 볼륨, 팬, EQ, 뮤트, 솔로도 지원합니다.</p>
+        <p data-lang="en">Patch effect pedals into an amp and cabinet per track, plus per-track volume, pan, EQ, mute and solo.</p></div>
+      <div class="card"><div class="ico">🎚️</div>
+        <h3 data-lang="ko">다양한 사운드 출력</h3><h3 data-lang="en">Sound output options</h3>
+        <p data-lang="ko">macOS 표준 MIDI, 내장 신스, 외부 MIDI 음원(Sound Canvas 등 GS/GM 모듈), 악기 플러그인(AU) 중에서 고를 수 있습니다.</p>
+        <p data-lang="en">Choose the macOS standard MIDI synth, the built-in synth, an external MIDI module (Sound Canvas or any GS/GM module) or an instrument plug-in (AU).</p></div>
+      <div class="card"><div class="ico">🎯</div>
+        <h3 data-lang="ko">튜너</h3><h3 data-lang="en">Tuner</h3>
+        <p data-lang="ko">마이크로 악기 소리를 듣고 음정을 표시하는 튜너가 들어 있습니다.</p>
+        <p data-lang="en">A built-in tuner listens to your instrument through the microphone.</p></div>
+      <div class="card"><div class="ico">📤</div>
+        <h3 data-lang="ko">내보내기 & 프린트</h3><h3 data-lang="en">Export & print</h3>
+        <p data-lang="ko">PDF, MIDI, ASCII 타브로 내보내고 바로 프린트할 수 있습니다. 작업한 곡은 Tab Player 파일(.tws)로 저장됩니다.</p>
+        <p data-lang="en">Export to PDF, MIDI or ASCII tab, or print directly. Your songs save as Tab Player files (.tws).</p></div>
+      <div class="card"><div class="ico">🌏</div>
+        <h3 data-lang="ko">4개 언어</h3><h3 data-lang="en">Four languages</h3>
+        <p data-lang="ko">한국어, English, 日本語, 简体中文을 지원하며 시스템 언어를 자동으로 따릅니다.</p>
+        <p data-lang="en">Korean, English, Japanese and Simplified Chinese; follows your system language automatically.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="soundcompas">
+  <div class="wrap">
+    <div class="sc">
+      <div>
+        <h2 data-lang="ko">🎛 SoundCompas로 더 좋은 사운드를</h2>
+        <h2 data-lang="en">🎛 Better sound with SoundCompas</h2>
+        <p data-lang="ko">Tab Player는 단독으로도 쓸 수 있지만, 가상 음원 플러그인 <b>SoundCompas</b>를 함께 설치하면 <b>훨씬 풍부하고 생생한 사운드</b>로 연주를 들을 수 있습니다. SoundCompas는 Roland Sound Canvas SC-8850을 모티프로 만든 음원으로, Tab Player 안에서 바로 불러와 사운드 모듈처럼 사용할 수 있습니다.</p>
+        <p data-lang="en">Tab Player works on its own, but installing the virtual instrument plug-in <b>SoundCompas</b> gives your songs <b>a much richer, more lifelike sound</b>. Inspired by the Roland Sound Canvas SC-8850, it loads right inside Tab Player and plays like a sound module.</p>
+        <a class="btn primary" href="https://jayusop.github.io/SoundCompas/" target="_blank" rel="noopener"><span data-lang="ko">SoundCompas 받기 →</span><span data-lang="en">Get SoundCompas →</span></a>
+      </div>
+      <div>
+        <ol data-lang="ko">
+          <li>SoundCompas를 설치합니다. (Audio Unit 플러그인이 <code>~/Library/Audio/Plug-Ins/Components</code>에 설치됩니다)</li>
+          <li>Tab Player를 실행합니다. 이미 열려 있었다면 다시 실행하세요.</li>
+          <li><b>사운드 출력</b>에서 <b>악기 플러그인 (AU)</b> → <b>SoundCompas</b>를 선택합니다.</li>
+          <li>재생하면 SoundCompas 사운드로 연주됩니다.</li>
+        </ol>
+        <ol data-lang="en">
+          <li>Install SoundCompas (the Audio Unit goes into <code>~/Library/Audio/Plug-Ins/Components</code>).</li>
+          <li>Launch Tab Player, or relaunch it if it was already open.</li>
+          <li>Under <b>Sound output</b>, choose <b>Instrument plug-in (AU)</b> → <b>SoundCompas</b>.</li>
+          <li>Press play — your song now sounds through SoundCompas.</li>
+        </ol>
+        <p class="note" data-lang="ko">SoundCompas가 없어도 macOS 기본 MIDI 음원이나 내장 신스로 재생됩니다.</p>
+        <p class="note" data-lang="en">Without SoundCompas, songs play through the macOS MIDI synth or the built-in synth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="download">
+  <div class="wrap">
+    <h2><span data-lang="ko">다운로드</span><span data-lang="en">Download</span></h2>
+    <p class="lead" data-lang="ko">무료입니다. 내 Mac에 맞는 파일을 고르세요. 잘 모르겠다면 Universal을 받으면 됩니다.</p>
+    <p class="lead" data-lang="en">Free. Pick the file for your Mac — if unsure, take Universal.</p>
+    <div class="dl">
+      <div class="card">
+        <h3>Apple Silicon <span class="badge" data-lang="ko">추천</span><span class="badge" data-lang="en">Recommended</span></h3>
+        <p data-lang="ko">M1·M2·M3·M4 등 Apple 칩 Mac</p><p data-lang="en">Macs with Apple chips (M1, M2, M3, M4…)</p>
+        <a class="btn primary" href="https://github.com/jayusop/TabPlayer/releases/latest/download/TabPlayer-apple-silicon.zip">TabPlayer-apple-silicon.zip</a>
+      </div>
+      <div class="card">
+        <h3>Intel</h3>
+        <p data-lang="ko">Intel 프로세서 Mac</p><p data-lang="en">Macs with Intel processors</p>
+        <a class="btn ghost" style="margin-left:0" href="https://github.com/jayusop/TabPlayer/releases/latest/download/TabPlayer-intel.zip">TabPlayer-intel.zip</a>
+      </div>
+      <div class="card">
+        <h3>Universal</h3>
+        <p data-lang="ko">모든 Mac에서 실행 (파일이 조금 더 큼)</p><p data-lang="en">Runs on any Mac (slightly larger)</p>
+        <a class="btn ghost" style="margin-left:0" href="https://github.com/jayusop/TabPlayer/releases/latest/download/TabPlayer-universal.zip">TabPlayer-universal.zip</a>
+      </div>
+    </div>
+    <p class="meta" style="margin-top:20px">
+      <span data-lang="ko">이전 버전과 변경 내역: <a href="https://github.com/jayusop/TabPlayer/releases">Releases 페이지</a> · Mac 칩 확인: Apple 메뉴  → 이 Mac에 관하여</span>
+      <span data-lang="en">Older versions and release notes: <a href="https://github.com/jayusop/TabPlayer/releases">Releases</a> · Check your chip: Apple menu  → About This Mac</span>
+    </p>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <h2><span data-lang="ko">설치 방법</span><span data-lang="en">Installing</span></h2>
+    <p class="lead" data-lang="ko">Tab Player는 App Store 밖에서 배포되므로 처음 실행할 때 macOS 확인 절차가 한 번 필요할 수 있습니다.</p>
+    <p class="lead" data-lang="en">Tab Player is distributed outside the App Store, so macOS may ask you to confirm the first launch.</p>
+    <ol class="steps" data-lang="ko">
+      <li><b>ZIP 파일 압축 풀기</b><span>다운로드한 ZIP을 더블클릭하면 <code>Tab Player.app</code>이 나옵니다.</span></li>
+      <li><b>응용 프로그램 폴더로 옮기기</b><span><code>Tab Player.app</code>을 Finder의 <b>응용 프로그램</b> 폴더로 드래그합니다.</span></li>
+      <li><b>처음 실행</b><span>앱을 <b>우클릭(Control+클릭) → 열기</b>를 누르고, 확인 창에서 다시 <b>열기</b>를 누릅니다.</span></li>
+      <li><b>열리지 않을 때</b><span><b>시스템 설정 → 개인정보 보호 및 보안</b> 아래쪽에서 Tab Player 항목의 <b>그래도 열기</b>를 누릅니다.</span></li>
+      <li><b>튜너를 쓰려면</b><span>튜너를 처음 켤 때 마이크 접근을 물으면 <b>허용</b>을 누릅니다.</span></li>
+    </ol>
+    <ol class="steps" data-lang="en">
+      <li><b>Unzip</b><span>Double-click the downloaded ZIP to get <code>Tab Player.app</code>.</span></li>
+      <li><b>Move to Applications</b><span>Drag <code>Tab Player.app</code> into your <b>Applications</b> folder.</span></li>
+      <li><b>First launch</b><span><b>Right-click (Control-click) → Open</b>, then click <b>Open</b> again in the dialog.</span></li>
+      <li><b>If it still won't open</b><span>Go to <b>System Settings → Privacy &amp; Security</b> and click <b>Open Anyway</b> next to Tab Player.</span></li>
+      <li><b>For the tuner</b><span>Click <b>Allow</b> when macOS asks for microphone access the first time you open the tuner.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="specs">
+  <div class="wrap">
+    <h2><span data-lang="ko">시스템 요구사항</span><span data-lang="en">Requirements</span></h2>
+    <table data-lang="ko">
+      <tr><td>운영체제</td><td>macOS 12 Monterey 이상</td></tr>
+      <tr><td>프로세서</td><td>Apple Silicon 또는 Intel</td></tr>
+      <tr><td>여는 파일</td><td>.gp3 · .gp4 · .gp5 · .gpx · .gp · .tws</td></tr>
+      <tr><td>내보내기</td><td>PDF · MIDI (.mid) · ASCII 타브 (.txt) · 프린트</td></tr>
+      <tr><td>사운드</td><td>macOS 표준 MIDI · 내장 신스 · 외부 MIDI 장치 · 악기 플러그인 (AU, 예: SoundCompas)</td></tr>
+      <tr><td>언어</td><td>한국어 · English · 日本語 · 简体中文</td></tr>
+    </table>
+    <table data-lang="en">
+      <tr><td>OS</td><td>macOS 12 Monterey or later</td></tr>
+      <tr><td>Processor</td><td>Apple Silicon or Intel</td></tr>
+      <tr><td>Opens</td><td>.gp3 · .gp4 · .gp5 · .gpx · .gp · .tws</td></tr>
+      <tr><td>Exports</td><td>PDF · MIDI (.mid) · ASCII tab (.txt) · Print</td></tr>
+      <tr><td>Sound</td><td>macOS standard MIDI · built-in synth · external MIDI device · instrument plug-in (AU, e.g. SoundCompas)</td></tr>
+      <tr><td>Languages</td><td>Korean · English · Japanese · Simplified Chinese</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>FAQ</h2>
+    <div data-lang="ko">
+      <details><summary>정말 무료인가요?</summary><p>네, 무료로 내려받아 사용할 수 있습니다. 소스 코드는 공개하지 않고 실행 파일만 배포합니다.</p></details>
+      <details><summary>소리가 단조롭게 들려요.</summary><p>SoundCompas를 설치하고 사운드 출력에서 악기 플러그인 → SoundCompas를 선택해 보세요. 훨씬 풍부한 사운드로 들을 수 있습니다. 외부 MIDI 음원(Sound Canvas 등)을 연결해 쓸 수도 있습니다.</p></details>
+      <details><summary>"확인되지 않은 개발자" 경고가 떠요.</summary><p>App Store 밖에서 받은 앱이라 나타나는 macOS 기본 경고입니다. 위 <a href="#install">설치 방법</a>의 3–4단계를 따라 주세요.</p></details>
+      <details><summary>파일이 열리지 않아요.</summary><p>일부 파일은 내용이 손상되었거나 지원하지 않는 요소가 있을 수 있습니다. 파일과 함께 <a href="https://github.com/jayusop/TabPlayer/issues">Issues</a>에 알려 주시면 확인하겠습니다.</p></details>
+      <details><summary>문제나 제안은 어디에 남기나요?</summary><p><a href="https://github.com/jayusop/TabPlayer/issues">GitHub Issues</a>에 남겨 주세요.</p></details>
+    </div>
+    <div data-lang="en">
+      <details><summary>Is it really free?</summary><p>Yes, it's free to download and use. Only the app is distributed; the source code is not published.</p></details>
+      <details><summary>The sound feels plain.</summary><p>Install SoundCompas and choose Instrument plug-in → SoundCompas under Sound output for a much richer sound. You can also connect an external MIDI module such as a Sound Canvas.</p></details>
+      <details><summary>macOS says the developer can't be verified.</summary><p>That's the standard warning for apps from outside the App Store. Follow steps 3–4 under <a href="#install">Installing</a>.</p></details>
+      <details><summary>A file won't open.</summary><p>Some files may be damaged or use something not yet supported. Please report it on <a href="https://github.com/jayusop/TabPlayer/issues">Issues</a> with the file attached.</p></details>
+      <details><summary>Where do I report problems or ideas?</summary><p>On <a href="https://github.com/jayusop/TabPlayer/issues">GitHub Issues</a>.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Tab Player · <a href="https://github.com/jayusop/TabPlayer">GitHub</a> · <a href="https://jayusop.github.io/SoundCompas/">SoundCompas</a></div>
+    <div style="margin-top:8px" data-lang="ko">Guitar Pro는 Arobas Music의 상표입니다. Tab Player는 Arobas Music과 관련이 없는 독립 앱입니다. Roland 및 Sound Canvas는 Roland Corporation의 상표입니다.</div>
+    <div style="margin-top:8px" data-lang="en">Guitar Pro is a trademark of Arobas Music. Tab Player is an independent app not affiliated with Arobas Music. Roland and Sound Canvas are trademarks of Roland Corporation.</div>
+  </div>
+</footer>
+
+<script>
+  function setLang(l){
+    document.body.classList.toggle('en', l==='en');
+    document.documentElement.lang = l;
+    document.getElementById('b-ko').classList.toggle('on', l==='ko');
+    document.getElementById('b-en').classList.toggle('on', l==='en');
+    try{localStorage.setItem('tp-lang', l)}catch(e){}
+  }
+  (function(){
+    var l=null; try{l=localStorage.getItem('tp-lang')}catch(e){}
+    if(!l) l=(navigator.language||'ko').toLowerCase().startsWith('ko')?'ko':'en';
+    setLang(l);
+  })();
+</script>
+</body>
+</html>
