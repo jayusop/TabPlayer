@@ -21,7 +21,7 @@
 
 ## 🎛 SoundCompas로 더 좋은 사운드를
 
-**[SoundCompas](https://jayusop.github.io/SoundCompas/)** 를 함께 설치하면 훨씬 풍부하고 생생한 사운드로 연주를 들을 수 있습니다.
+**[SoundCompas](https://github.com/jayusop/SoundCompas)** 를 함께 설치하면 훨씬 풍부하고 생생한 사운드로 연주를 들을 수 있습니다.
 설치한 뒤 Tab Player의 **사운드 출력 → 악기 플러그인 (AU) → SoundCompas**를 선택하세요.
 
 ## 다운로드
