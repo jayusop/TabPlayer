@@ -11,10 +11,13 @@
 
 - **Guitar Pro 파일 열기**: .gp3 / .gp4 / .gp5 / .gpx / .gp (GP3–GP8)
 - **타브 + 오선보**: A4 페이지 레이아웃, 여러 트랙
+- **코드 이름 자동 표시**: 기타 트랙의 화음을 Am, C, G처럼 악보 위에 표시
 - **연습 도구**: A–B 구간 반복, 재생 속도 조절, 메트로놈, 카운트인
 - **편집**: 가상 지판, 해머온·슬라이드·벤딩·비브라토·팜뮤트 등 주법 입력
 - **페달보드 & 앰프**: 트랙별 이펙터, 볼륨·팬·EQ·뮤트·솔로
 - **사운드 출력**: macOS 표준 MIDI, 내장 신스, 외부 MIDI 장치, 악기 플러그인(AU)
+- **라인 입력**: 오디오 인터페이스에 연결한 악기를 곡과 함께 연주 (페달·앰프 적용 가능)
+- **색소폰 운지표**: 소프라노·알토·테너·바리톤, 알티시모 음역까지
 - **튜너**: 마이크 입력
 - **내보내기**: PDF, MIDI, ASCII 타브, 프린트
 - **언어**: 한국어, English, 日本語, 简体中文
@@ -32,7 +35,7 @@
 | Intel | [TabPlayer-intel.zip](https://github.com/jayusop/TabPlayer/releases/latest/download/TabPlayer-intel.zip) |
 | Universal (모든 Mac) | [TabPlayer-universal.zip](https://github.com/jayusop/TabPlayer/releases/latest/download/TabPlayer-universal.zip) |
 
-**요구사항:** macOS 12 이상
+**최신 버전:** 0.2.0 · **요구사항:** macOS 12 이상
 
 ## 설치
 

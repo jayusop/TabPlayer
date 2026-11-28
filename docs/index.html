@@ -107,8 +107,8 @@
     <p class="tag" data-lang="en">A free macOS tab player to open, hear, practise and edit<br>Guitar Pro files</p>
     <a class="btn primary" href="#download"><span data-lang="ko">⬇ 무료 다운로드</span><span data-lang="en">⬇ Free download</span></a>
     <a class="btn ghost" href="#soundcompas"><span data-lang="ko">🎛 SoundCompas와 함께 쓰기</span><span data-lang="en">🎛 Use with SoundCompas</span></a>
-    <div class="meta" data-lang="ko">macOS 12 이상 · Apple Silicon / Intel · 버전 0.1.0</div>
-    <div class="meta" data-lang="en">macOS 12 or later · Apple Silicon / Intel · version 0.1.0</div>
+    <div class="meta" data-lang="ko">macOS 12 이상 · Apple Silicon / Intel · 버전 0.2.0</div>
+    <div class="meta" data-lang="en">macOS 12 or later · Apple Silicon / Intel · version 0.2.0</div>
     <div class="shot"><img src="screenshot.jpg" alt="Tab Player 화면"></div>
   </div>
 </header>
@@ -127,6 +127,10 @@
         <h3 data-lang="ko">타브 + 오선보</h3><h3 data-lang="en">Tab + notation</h3>
         <p data-lang="ko">A4 페이지 레이아웃으로 타브와 오선보를 함께 보여 줍니다. 기타, 베이스, 드럼 등 여러 트랙을 지원합니다.</p>
         <p data-lang="en">Tablature and standard notation on A4 pages, with multiple tracks: guitar, bass, drums and more.</p></div>
+      <div class="card"><div class="ico">🎵</div>
+        <h3 data-lang="ko">코드 이름 자동 표시</h3><h3 data-lang="en">Automatic chord names</h3>
+        <p data-lang="ko">기타 트랙에서 함께 치는 음을 분석해 Am, C, G, D/F# 같은 코드 이름을 악보 위에 자동으로 적어 줍니다.</p>
+        <p data-lang="en">On guitar tracks, the notes played together are named as chords (Am, C, G, D/F#…) and written above the staff automatically.</p></div>
       <div class="card"><div class="ico">🔁</div>
         <h3 data-lang="ko">연습 도구</h3><h3 data-lang="en">Practice tools</h3>
         <p data-lang="ko">A–B 구간 반복, 재생 속도 조절, 메트로놈, 카운트인으로 어려운 부분을 천천히 반복 연습하세요.</p>
@@ -143,6 +147,14 @@
         <h3 data-lang="ko">다양한 사운드 출력</h3><h3 data-lang="en">Sound output options</h3>
         <p data-lang="ko">macOS 표준 MIDI, 내장 신스, 외부 MIDI 음원(Sound Canvas 등 GS/GM 모듈), 악기 플러그인(AU) 중에서 고를 수 있습니다.</p>
         <p data-lang="en">Choose the macOS standard MIDI synth, the built-in synth, an external MIDI module (Sound Canvas or any GS/GM module) or an instrument plug-in (AU).</p></div>
+      <div class="card"><div class="ico">🔌</div>
+        <h3 data-lang="ko">라인 입력으로 함께 연주</h3><h3 data-lang="en">Play along via line input</h3>
+        <p data-lang="ko">오디오 인터페이스에 연결한 기타·베이스·마이크 소리를 곡과 함께 들려줍니다. 트랙의 페달과 앰프를 거쳐 들을 수도 있습니다.</p>
+        <p data-lang="en">Hear a guitar, bass or mic plugged into your audio interface together with the song, optionally through a track's pedals and amp.</p></div>
+      <div class="card"><div class="ico">🎷</div>
+        <h3 data-lang="ko">색소폰 운지표</h3><h3 data-lang="en">Saxophone fingering chart</h3>
+        <p data-lang="ko">소프라노·알토·테너·바리톤 색소폰 트랙에서 커서를 음표에 두면 운지가 표시됩니다. 알티시모 음역까지 지원합니다.</p>
+        <p data-lang="en">On soprano, alto, tenor or baritone sax tracks, put the cursor on a note to see its fingering, up into the altissimo range.</p></div>
       <div class="card"><div class="ico">🎯</div>
         <h3 data-lang="ko">튜너</h3><h3 data-lang="en">Tuner</h3>
         <p data-lang="ko">마이크로 악기 소리를 듣고 음정을 표시하는 튜너가 들어 있습니다.</p>
@@ -160,6 +172,11 @@
       <img src="pedalboard.jpg" alt="Tab Player 이펙터 & 앰프 창" loading="lazy">
       <figcaption data-lang="ko">트랙마다 페달과 앰프·캐비닛으로 톤을 만드는 이펙터 & 앰프 창</figcaption>
       <figcaption data-lang="en">The effects &amp; amp window: build each track's tone with pedals, an amp and a cabinet</figcaption>
+    </figure>
+    <figure class="fig" style="max-width:560px">
+      <img src="linein.jpg" alt="Tab Player 라인 입력 창" loading="lazy">
+      <figcaption data-lang="ko">라인 입력 창: 오디오 인터페이스의 입력 장치·채널·레벨을 고르고, 트랙의 페달과 앰프를 거쳐 함께 연주합니다</figcaption>
+      <figcaption data-lang="en">The line input window: pick the interface input, channel and level, and play along through a track's pedals and amp</figcaption>
     </figure>
   </div>
 </section>
@@ -233,14 +250,14 @@
       <li><b>응용 프로그램 폴더로 옮기기</b><span><code>Tab Player.app</code>을 Finder의 <b>응용 프로그램</b> 폴더로 드래그합니다.</span></li>
       <li><b>처음 실행</b><span>앱을 <b>우클릭(Control+클릭) → 열기</b>를 누르고, 확인 창에서 다시 <b>열기</b>를 누릅니다.</span></li>
       <li><b>열리지 않을 때</b><span><b>시스템 설정 → 개인정보 보호 및 보안</b> 아래쪽에서 Tab Player 항목의 <b>그래도 열기</b>를 누릅니다.</span></li>
-      <li><b>튜너를 쓰려면</b><span>튜너를 처음 켤 때 마이크 접근을 물으면 <b>허용</b>을 누릅니다.</span></li>
+      <li><b>튜너·라인 입력을 쓰려면</b><span>처음 켤 때 macOS가 마이크(오디오 입력) 접근을 물으면 <b>허용</b>을 누릅니다. 라인 입력은 하울링을 막기 위해 헤드폰으로 들으세요.</span></li>
     </ol>
     <ol class="steps" data-lang="en">
       <li><b>Unzip</b><span>Double-click the downloaded ZIP to get <code>Tab Player.app</code>.</span></li>
       <li><b>Move to Applications</b><span>Drag <code>Tab Player.app</code> into your <b>Applications</b> folder.</span></li>
       <li><b>First launch</b><span><b>Right-click (Control-click) → Open</b>, then click <b>Open</b> again in the dialog.</span></li>
       <li><b>If it still won't open</b><span>Go to <b>System Settings → Privacy &amp; Security</b> and click <b>Open Anyway</b> next to Tab Player.</span></li>
-      <li><b>For the tuner</b><span>Click <b>Allow</b> when macOS asks for microphone access the first time you open the tuner.</span></li>
+      <li><b>For the tuner and line input</b><span>Click <b>Allow</b> when macOS asks for microphone (audio input) access. Use headphones with line input to avoid feedback.</span></li>
     </ol>
   </div>
 </section>
@@ -254,6 +271,7 @@
       <tr><td>여는 파일</td><td>.gp3 · .gp4 · .gp5 · .gpx · .gp · .tws</td></tr>
       <tr><td>내보내기</td><td>PDF · MIDI (.mid) · ASCII 타브 (.txt) · 프린트</td></tr>
       <tr><td>사운드</td><td>macOS 표준 MIDI · 내장 신스 · 외부 MIDI 장치 · 악기 플러그인 (AU, 예: SoundCompas)</td></tr>
+      <tr><td>라인 입력</td><td>오디오 인터페이스 입력 모니터링 (헤드폰 권장)</td></tr>
       <tr><td>언어</td><td>한국어 · English · 日本語 · 简体中文</td></tr>
     </table>
     <table data-lang="en">
@@ -262,6 +280,7 @@
       <tr><td>Opens</td><td>.gp3 · .gp4 · .gp5 · .gpx · .gp · .tws</td></tr>
       <tr><td>Exports</td><td>PDF · MIDI (.mid) · ASCII tab (.txt) · Print</td></tr>
       <tr><td>Sound</td><td>macOS standard MIDI · built-in synth · external MIDI device · instrument plug-in (AU, e.g. SoundCompas)</td></tr>
+      <tr><td>Line input</td><td>Audio interface input monitoring (headphones recommended)</td></tr>
       <tr><td>Languages</td><td>Korean · English · Japanese · Simplified Chinese</td></tr>
     </table>
   </div>
